@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Results</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Resume Results</h1>
+        <div id="results"></div>
+    </div>
+    <script>
+       // JavaScript for displaying resume results based on acceptance status
+        document.addEventListener('DOMContentLoaded', function() {
+        // Get the results from localStorage
+        const results = JSON.parse(localStorage.getItem('resumeResults'));
+
+        if (results && results.length > 0) {
+            const resultsContainer = document.getElementById('results');
+            results.forEach(result => {
+                const resultCard = document.createElement('div');
+                resultCard.classList.add('result-card');
+
+                // Extract data from result
+                const summary = result.summary;
+                const strengths = summary.Summary.Strengths;
+                const weaknesses = summary.Summary.Weaknesses;
+
+                // Common content for both accepted and rejected candidates
+                let resultContent = `
+                    <img src="../static/images/chat-icon.png" alt="Chat Icon" class="card-image" onclick="handleChatIconClick()">
+                    <h3><div class="${summary.Status === 'Accept' ? 'score_accept' : 'score_reject'}">${summary.Score}/10 </div> ${summary.Name}</h3>
+                `;
+
+                if (summary.Status === 'Accept') {
+                    // Additional content for accepted candidate
+                    resultContent += `
+                        <p><strong>Status:</strong> Accepted</p>
+                        <p><strong>Strengths:</strong> ${strengths}</p>
+                        <p><strong>Weaknesses:</strong> ${weaknesses}</p>
+                        <a href="/api/download-pdf/${result.resume_id}" target="_blank">View Resume</a> | 
+                        <a href="#" onclick="generatePitchEmail('${result.resume_id}')">Generate Pitch Email</a>
+                    `;
+                } else if (summary.Status === 'Reject') {
+                    // Additional content for rejected candidate
+                    const rejectionReason = summary.Summary.Reason;
+                    resultContent += `
+                        <p><strong>Status:</strong> Rejected</p>
+                        <p><strong>Reason:</strong> ${rejectionReason}</p>
+                        <a href="/api/download-pdf/${result.resume_id}" target="_blank">View Resume</a> | 
+                        <a href="#" onclick="generatePitchEmail('${result.resume_id}')">Generate Pitch Email</a>
+                    `;
+                }
+
+                resultCard.innerHTML = resultContent;
+                resultsContainer.appendChild(resultCard);
+            });
+        } else {
+            document.getElementById('results').innerText = 'No results found.';
+        }
+    });
+
+
+        function generatePitchEmail(resume_id) {
+            // Add the logic for generating the pitch email here
+            const jobDescription = localStorage.getItem('jobDescription');
+            
+            fetch(`/api/generate-email/${resume_id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ jobDescription: jobDescription })
+            })                                                                                                                                                                             
+            .then(response => response.json())
+            .then(data => {
+                if (data.pitch_email) {
+                    localStorage.setItem('pitchEmail', data.pitch_email);
+                    window.location.href = 'pitch-email';
+                } else {
+                    alert('Error generating pitch email');
+                }
+            })
+            .catch(error => console.error('Error generating pitch email:', error));
+        }
+
+        function handleChatIconClick(resume_id) {
+            console.log("You can now start chatting with this resume!");
+
+            const jobDescription = localStorage.getItem('jobDescription');
+
+            async function chatWithAPI(user_input) {
+                try {
+                    const response = await fetch(`/api/chat-icon/${resume_id}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            jobDescription: jobDescription,
+                            userInput: user_input
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const data = await response.json();
+                    console.log(`AI: ${data.response}`);
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+
+            (async function chatLoop() {
+                while (true) {
+                    let user_input = prompt("You: ");
+                    if (user_input === null || user_input.toLowerCase() === "exit") {
+                        console.log("Chat ended.");
+                        break;
+                    }
+
+                    await chatWithAPI(user_input);
+                }
+            })();
+        }
+
+
+    </script>
+
+</body>
+</html>
