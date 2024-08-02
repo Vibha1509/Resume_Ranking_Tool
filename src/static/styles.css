@@ -1,0 +1,306 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    background: url('../static/images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Header styles */
+h1 {
+    font-size: 2.5em; 
+    color: black;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+    margin-top: 20px;
+    z-index: 1;
+    position: relative;
+    text-align: center;
+}
+
+/* Main container styles */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+/* Info box styles */
+.info-box {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    margin: 5px auto;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 80%;
+    font-size: 0.85em;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); /* 3D look with shadow */
+}
+
+/* Main content styles */
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    padding-top: 20px;
+}
+
+.horizontal-form {
+    display: flex;
+    align-items: flex-start;
+    gap: 60px; /* Adjust the gap between the sections as needed */
+}
+
+/* Upload section styles */
+.upload-section {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    flex: 1;
+    transition: background-color 0.3s ease;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); /* 3D look with shadow */
+}
+
+.upload-section label {
+    font-size: 1.2em;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.upload-section input[type="file"] {
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+.upload-section.active {
+    background-color: rgba(255, 255, 255, 0.9); /* White translucent background */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); /* 3D look with shadow */
+}
+
+/* Styles for file list */
+.file-list {
+    font-size: 0.9em;
+    color: black;
+    margin-top: 10px;
+}
+
+.remove-btn {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+
+/* Job description styles */
+.job-description {
+    width: 100%; /* Span across the whole screen */
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    border-radius: 10px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.job-description textarea {
+    width: 100%; /* Span across the whole width */
+    box-sizing: border-box;
+    font-size: 1em;
+    padding: 10px;
+    margin-bottom: 10px; /* Margin for spacing between textarea and button */
+    border-radius: 5px; /* Add border-radius if needed */
+    border: 1px solid #ccc; /* Border for visual clarity */
+    background-color: rgba(255, 255, 255, 0.9); /* Transparent background color */
+    border: 1px solid #ccc; /* Optional: Add a border to distinguish the textarea */
+    border-radius: 5px; /* Optional: Add rounded corners to the textarea */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); /* 3D look with shadow */
+}
+
+.job-description button {
+    align-self: center; /* Center the button horizontally */
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: white;
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: auto; /* Push the button to the bottom of the container */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); /* 3D look with shadow */
+}
+
+
+/* Result card styles */
+/* .result-card {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); 
+    transition: transform 0.3s ease;
+    max-width: 80%; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.result-card:hover {
+    transform: translateY(-5px);
+}
+
+
+.score_accept {
+    display: inline-block;
+    width: 43px; 
+    height: 43px; 
+    line-height: 43px; 
+    text-align: center;
+    border-radius: 50%;
+    background-color: rgb(84, 200, 160);
+    color: rgb(10, 8, 8);
+    border: 1px solid black;
+    font-weight: bold;
+    margin-right: 10px;
+    z-index: 2;
+
+}
+
+.score_reject {
+    display: inline-block;
+    width: 43px; 
+    height: 43px; 
+    line-height: 43px; 
+    text-align: center;
+    border-radius: 50%;
+    background-color: rgb(200, 84, 84);
+    color: rgb(10, 8, 8);
+    border: 1px solid black;
+    font-weight: bold;
+    margin-right: 10px; 
+    z-index: 2;
+}
+
+.result-card a {
+    color: rgb(99, 99, 239);
+    text-decoration: none;
+    margin-right: 10px;
+    z-index: 2;
+}
+
+.result-card a:hover {
+    text-decoration: underline;
+    z-index: 2;
+} */
+
+
+/*NEW CSS WITH CHAT SYMBOL*/
+
+.result-card {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); /* 3D look with shadow */
+    transition: transform 0.3s ease;
+    max-width: 80%; /* Span across the screen */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.result-card:hover {
+    transform: translateY(-5px);
+}
+
+.score_accept, .score_reject {
+    display: inline-block;
+    width: 43px; /* Adjust the size as needed */
+    height: 43px; /* Adjust the size as needed */
+    line-height: 43px; /* This should match the height to center the text vertically */
+    text-align: center;
+    border-radius: 50%;
+    color: rgb(10, 8, 8);
+    border: 1px solid black;
+    font-weight: bold;
+    margin-right: 10px; /* Adjust the spacing between score and name */
+    z-index: 2;
+}
+
+.score_accept {
+    background-color: rgb(84, 200, 160);
+}
+
+.score_reject {
+    background-color: rgb(200, 84, 84);
+}
+
+.result-card a {
+    color: rgb(99, 99, 239);
+    text-decoration: none;
+    margin-right: 10px;
+    z-index: 2;
+}
+
+.result-card a:hover {
+    text-decoration: underline;
+    z-index: 2;
+}
+
+.card-image {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    z-index: 3;
+    cursor: pointer;
+}
+
+
+
+/* Styles for pitch-email */
+
+.pitch-email-container {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 80%;
+    transition: transform 0.3s;
+    white-space: pre-wrap;
+    z-index: 1;
+}
+
+.pitch-email-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Positioning for the copy button */
+.copy-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2; /* Ensure it is on top of other elements */
+}
+
+.copy-button img {
+    width: 24px; /* Adjust size as needed */
+    height: auto;
+}
+
+
+

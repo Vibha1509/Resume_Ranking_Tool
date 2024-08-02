@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pitch Email</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Pitch Email</h1>
+        <div id="pitch-email" class="pitch-email-container">
+            <button class="copy-button" onclick="copyToClipboard()">
+                <img src="{{ url_for('static', filename='images/copy-icon.png') }}" alt="copy icon">
+            </button>
+            <!-- The pitch email content will be inserted here -->
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve the pitch email from localStorage
+            const pitchEmail = localStorage.getItem('pitchEmail');
+            if (pitchEmail) {
+                // Display the pitch email
+                document.getElementById('pitch-email').innerText = pitchEmail;
+            } else {
+                document.getElementById('pitch-email').innerText = 'No pitch email found.';
+            }
+        });
+
+        function copyToClipboard() {
+            const pitchEmail = document.getElementById('pitch-email').innerText;
+            navigator.clipboard.writeText(pitchEmail).then(function() {
+                alert('Pitch email copied to clipboard!');
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
