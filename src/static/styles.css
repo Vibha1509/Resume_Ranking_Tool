@@ -133,75 +133,10 @@ h1 {
 }
 
 
-/* Result card styles */
-/* .result-card {
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 20px;
-    margin: 20px auto;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); 
-    transition: transform 0.3s ease;
-    max-width: 80%; 
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
-}
-
-.result-card:hover {
-    transform: translateY(-5px);
-}
-
-
-.score_accept {
-    display: inline-block;
-    width: 43px; 
-    height: 43px; 
-    line-height: 43px; 
-    text-align: center;
-    border-radius: 50%;
-    background-color: rgb(84, 200, 160);
-    color: rgb(10, 8, 8);
-    border: 1px solid black;
-    font-weight: bold;
-    margin-right: 10px;
-    z-index: 2;
-
-}
-
-.score_reject {
-    display: inline-block;
-    width: 43px; 
-    height: 43px; 
-    line-height: 43px; 
-    text-align: center;
-    border-radius: 50%;
-    background-color: rgb(200, 84, 84);
-    color: rgb(10, 8, 8);
-    border: 1px solid black;
-    font-weight: bold;
-    margin-right: 10px; 
-    z-index: 2;
-}
-
-.result-card a {
-    color: rgb(99, 99, 239);
-    text-decoration: none;
-    margin-right: 10px;
-    z-index: 2;
-}
-
-.result-card a:hover {
-    text-decoration: underline;
-    z-index: 2;
-} */
-
-
-/*NEW CSS WITH CHAT SYMBOL*/
+/*Result Cards*/
 
 .result-card {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.85);
     padding: 20px;
     margin: 20px auto;
     border-radius: 10px;

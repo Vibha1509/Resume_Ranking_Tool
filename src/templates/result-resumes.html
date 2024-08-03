@@ -12,55 +12,57 @@
         <div id="results"></div>
     </div>
     <script>
-       // JavaScript for displaying resume results based on acceptance status
+        // JavaScript for displaying resume results based on acceptance status
         document.addEventListener('DOMContentLoaded', function() {
-        // Get the results from localStorage
-        const results = JSON.parse(localStorage.getItem('resumeResults'));
+            // Get the results from localStorage
+            const results = JSON.parse(localStorage.getItem('resumeResults'));
 
-        if (results && results.length > 0) {
-            const resultsContainer = document.getElementById('results');
-            results.forEach(result => {
-                const resultCard = document.createElement('div');
-                resultCard.classList.add('result-card');
+            if (results && results.length > 0) {
+                const resultsContainer = document.getElementById('results');
+                results.forEach(result => {
+                    const resultCard = document.createElement('div');
+                    resultCard.classList.add('result-card');
 
-                // Extract data from result
-                const summary = result.summary;
-                const strengths = summary.Summary.Strengths;
-                const weaknesses = summary.Summary.Weaknesses;
+                    // Extract data from result
+                    const { resume_id, summary } = result;
+                    const { Name, Status, Score, Merits, Shortcomings, Reason } = summary;
 
-                // Common content for both accepted and rejected candidates
-                let resultContent = `
-                    <img src="../static/images/chat-icon.png" alt="Chat Icon" class="card-image" onclick="handleChatIconClick()">
-                    <h3><div class="${summary.Status === 'Accept' ? 'score_accept' : 'score_reject'}">${summary.Score}/10 </div> ${summary.Name}</h3>
-                `;
-
-                if (summary.Status === 'Accept') {
-                    // Additional content for accepted candidate
-                    resultContent += `
-                        <p><strong>Status:</strong> Accepted</p>
-                        <p><strong>Strengths:</strong> ${strengths}</p>
-                        <p><strong>Weaknesses:</strong> ${weaknesses}</p>
-                        <a href="/api/download-pdf/${result.resume_id}" target="_blank">View Resume</a> | 
-                        <a href="#" onclick="generatePitchEmail('${result.resume_id}')">Generate Pitch Email</a>
+                    // Common content for both accepted and rejected candidates
+                    let resultContent = `
+                        <img src="../static/images/chat-icon.png" alt="Chat Icon" class="card-image" onclick="handleChatIconClick()">
+                        <h3><div class="${Status === 'Accept' ? 'score_accept' : 'score_reject'}">${Score}/10 </div> ${Name}</h3>
                     `;
-                } else if (summary.Status === 'Reject') {
-                    // Additional content for rejected candidate
-                    const rejectionReason = summary.Summary.Reason;
-                    resultContent += `
-                        <p><strong>Status:</strong> Rejected</p>
-                        <p><strong>Reason:</strong> ${rejectionReason}</p>
-                        <a href="/api/download-pdf/${result.resume_id}" target="_blank">View Resume</a> | 
-                        <a href="#" onclick="generatePitchEmail('${result.resume_id}')">Generate Pitch Email</a>
-                    `;
-                }
 
-                resultCard.innerHTML = resultContent;
-                resultsContainer.appendChild(resultCard);
-            });
-        } else {
-            document.getElementById('results').innerText = 'No results found.';
-        }
-    });
+                    if (Status === 'Accept') {
+                        // Additional content for accepted candidate
+                        const meritsList = Merits.map(item => `<li>${item}</li>`).join('');
+                        resultContent += `
+                            <p><strong>Status:</strong> Accepted</p>
+                            <p><strong>Merits:</strong></p>
+                            <ul>${meritsList}</ul>
+                            <p><strong>Shortcomings:</strong> ${Shortcomings}</p>
+                            <a href="/api/download-pdf/${resume_id}" target="_blank">View Resume</a> | 
+                            <a href="#" onclick="generatePitchEmail('${resume_id}')">Generate Pitch Email</a>
+                        `;
+                    } else if (Status === 'Reject') {
+                        // Additional content for rejected candidate
+                        resultContent += `
+                            <p><strong>Status:</strong> Rejected</p>
+                            <p><strong>Reason:</strong> ${Reason}</p>
+                            <a href="/api/download-pdf/${resume_id}" target="_blank">View Resume</a> | 
+                            <a href="#" onclick="generatePitchEmail('${resume_id}')">Generate Pitch Email</a>
+                        `;
+                    }
+
+                    resultCard.innerHTML = resultContent;
+                    resultsContainer.appendChild(resultCard);
+                });
+            } else {
+                document.getElementById('results').innerText = 'No results found.';
+            }
+        });
+
+
 
 
         function generatePitchEmail(resume_id) {
