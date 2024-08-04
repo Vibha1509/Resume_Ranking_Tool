@@ -161,7 +161,7 @@ def get_summaries_from_llm(job_description, resume_ids):
             'resume_id': doc['resume_id'],
             'summary': summary_json,
         })
-    print(summaries)
+    # print(summaries)
     return summaries
 
 

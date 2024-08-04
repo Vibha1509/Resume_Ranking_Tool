@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Recruitment Platform</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Section 1: Header -->
+        <h1>Resume Ranking Tool</h1>
+        
+        <!-- Section 2: Application Description -->
+        <div class="info-box">
+            <p>This application leverages AI to make a recruiter's job 10x faster by efficiently shortlisting candidates for a given job. By analyzing resumes and matching them with job descriptions, the platform provides a scored list of candidates. The platform helps HR teams save time and focus on the best candidates. <br>Experience the power of AI in recruitment with our intuitive platform.
+            Upload multiple resumes and provide a job description to get started.</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Section 3: Upload Resumes -->
+            <form id="job-form" action="/api/fetch_resumes" method="POST" enctype="multipart/form-data" class="horizontal-form">
+                <div class="upload-section" id="upload-section">
+                    <label for="resume-upload" class="upload-label"></label>
+                    <input type="file" id="resumes" name="resumes" multiple accept=".pdf">
+                    <div id="file-list" class="file-list"></div>
+                </div>
+        
+                <!-- Section 4: Job Description -->
+                <div class="job-description">
+                    <textarea id="jobDescription" name="jobDescription" 
+                    placeholder=
+"Job Description Input:
+The job description should provide a clear and concise overview of the role, including the job title, required experience, essential skills, responsibilities, and any specific preferences such as location or gender. 
+Additionally, it should highlight any preferred qualifications and give a brief overview of the company and its mission." 
+                    rows="20" cols="120"></textarea>
+                    <button type="submit" class="btn">Submit</button>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+     
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Custom jQuery script -->
+    <script>
+        document.querySelector('#resumes').value = 'Upload Resumes';
+        $(document).ready(function() {
+            // Function to handle file uploads
+            $('#resumes').on('change', function() {
+                var files = $(this)[0].files;
+                var fileList = $('#file-list');
+                fileList.empty(); // Clear existing list
+                
+                for (var i = 0; i < files.length; i++) {
+                    var fileName = files[i].name;
+                    var listItem = $('<div class="file-item">' + fileName + '<span class="remove-btn" data-index="' + i + '">x</span></div>');
+                    fileList.append(listItem);
+                }
+            });
+
+            // Function to handle file removal
+            $(document).on('click', '.remove-btn', function() {
+                var index = $(this).data('index');
+                $('#resumes').get(0).files[index] = null; // Remove file from input
+                $(this).parent().remove(); // Remove file item from list
+            });
+
+            // Handle form submission with files and job description
+            $('#job-form').on('submit', function(e) {
+                e.preventDefault(); // Prevent default form submission
+
+                var formData = new FormData();
+                var files = $('#resumes')[0].files;
+                for (var i = 0; i < files.length; i++) {
+                    formData.append('resumes', files[i]);
+                }
+                formData.append('jobDescription', $('#jobDescription').val());
+                localStorage.setItem('jobDescription', jobDescription);
+
+                $.ajax({
+                    url: '/api/fetch_resumes',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        console.log('Success:', response);
+
+                        // Store the response in localStorage
+                        localStorage.setItem('resumeResults', JSON.stringify(response));
+
+                        // Redirect to the result-resumes.html page
+                        window.location.href = '/result-resumes';
+                    },
+                    error: function(error) {
+                        console.log('Error:', error);
+                        // Handle error response
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

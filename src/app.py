@@ -13,6 +13,10 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
+@app.route('/tool', methods=['GET'])
+def tool():
+    return render_template("tool.html")
+
 @app.route('/result-resumes')
 def result_resumes():
     return render_template('result-resumes.html')
