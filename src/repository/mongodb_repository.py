@@ -3,9 +3,10 @@ from bson import ObjectId
 import gridfs
 import datetime
 import uuid
+import os
 
 # Initialize Mongo client and GridFS
-mongo_client = MongoClient('mongodb://localhost:27017/')
+mongo_client = MongoClient(os.environ.get("MY_MONGO_URI"))
 db = mongo_client['candidate_resumes_db']
 fs = gridfs.GridFS(db)
 
