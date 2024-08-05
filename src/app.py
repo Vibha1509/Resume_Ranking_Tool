@@ -5,6 +5,8 @@ from src.services.service import process_resumes_and_jd
 from src.repository.mongodb_repository import get_resume_by_id
 from src.utils.llm_utils import generate_pitch_email_from_llm, chat_with_resume
 
+import os
+
 
 app = Flask(__name__)
 
@@ -97,5 +99,7 @@ def chat_icon_conversation(resume_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=port)
 
